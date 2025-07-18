@@ -41,9 +41,14 @@ const CharacterContent = ({ setVisibility }) => {
     fetch(API_URL)
       .then((response) => response.json())
       .then((data) => {
-        const characters = data.results;
+        // Гарри Поттер API возвращает массив напрямую
+        const characters = data;
         const randomCharacter = getRandomElementOfArray(characters);
         setCharacter({ name: randomCharacter.name });
+      })
+      .catch((error) => {
+        console.error("Ошибка при загрузке персонажа:", error);
+        setCharacter({ name: "Ошибка загрузки" });
       });
   };
   const getRandomCharacterHandler = () => {
@@ -54,6 +59,11 @@ const CharacterContent = ({ setVisibility }) => {
   const hideComponentHandler = () => {
     setVisibility(false);
   };
+
+  // Охранное условие: если имя "Undefined", показываем "Loading..."
+  if (character.name === "Undefined") {
+    return <h2>Loading...</h2>;
+  }
 
   return (
     <>
