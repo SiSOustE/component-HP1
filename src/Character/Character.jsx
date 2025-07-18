@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./styles.css";
 import { getRandomHexColor, getRandomElementOfArray } from "./utils";
-import { API_URL } from "./consts";
+import { API_URL, timeNextCall } from "./consts";
 
 const Character = () => {
   const [visibility, setVisibility] = useState(true);
@@ -25,7 +25,7 @@ const CharacterContent = ({ setVisibility }) => {
     intervalRef.current = setInterval(() => {
       console.log("setInterval");
       getRandomCharacter();
-    }, 3000);
+    }, timeNextCall);
 
     return () => {
       console.log("Component: Unmount");
